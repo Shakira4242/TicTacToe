@@ -1,0 +1,34 @@
+* {
+	box-sizing:border-box;
+}
+
+table {
+	margin-top: 100px;
+	margin-left:auto; 
+	margin-right:auto; 
+	width: 551px; 
+}
+td {
+    height: 175px;
+    width: 175px;
+    text-align: center;
+    font-size: 120px;
+    border: 2px solid #cccccc;
+    -webkit-border-radius: 10px;
+}
+
+h1 {
+	text-align: center;
+}
+
+.btn-group {
+	display: table;
+	margin: 0 auto;
+}
+
+select {
+	display: table;
+	margin: 0 auto;
+}
+
+

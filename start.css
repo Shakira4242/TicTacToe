@@ -1,0 +1,27 @@
+* {
+	box-sizing:border-box;
+}
+
+.btn-primary {
+	display: table;
+    margin: 10px auto;
+}
+
+.jumbotron {
+	padding-left: 10px;
+}
+
+#pic {
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+}
+
+#name-footer {
+	display: inline-block;
+}
+
+body { 
+	position: fixed; 
+	overflow-y:scroll 
+}

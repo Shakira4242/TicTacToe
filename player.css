@@ -1,0 +1,23 @@
+* {
+	box-sizing : border-box;
+}
+
+.image {
+    position: relative;
+    float: left;
+    width:  260px;
+    height: 140px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.thumbnailscontainer {
+	display: inline;
+}
+
+img.image {
+	height: 140px;
+    width: 260px;
+}
+
