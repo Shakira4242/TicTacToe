@@ -1,6 +1,6 @@
 $(function(){
 
-	function initializePlayers(){
+	function switchPlayers(){
 		curPlayer = curPlayer ? 0 : 1;
 		switchPiece();
 	};
@@ -15,24 +15,41 @@ $(function(){
 	}
 
 	function newGame(){
+		endGame = false;
+		clearBoard();
+		getPlayer();
+	}
+
+	function clearBoard(){
+		$("td").each(function(i,v){
+			$(v).html("");
+		});
+	}
+
+
+	function GameOver(){
+		warning = false;
+		if((($("#1").html()) == ($("#2").html()) && ($("#2").html()==($("#3").html())))){
+			warning = true;
+		}
+		return warning;
+	};
+
+	function initialize(){
+		newGame();
+		$('td').on('click',function(){
+			if($(this).html() == "" && !endGame){
+				$(this).html(curPiece);
+			}
+			if(GameOver()){
+				endGame = true;
+			} else {
+				switchPlayers();
+			}
+
+		});
 
 	}
 
-	function start(){
-		
-	};
-
-	function weHaveAWinner(){
-		return alert("HAHAHAH");
-	};
-
-	function finished(){
-		if(($("#1").html() == $("#2").html()) && ($("#2").html() == $("#3").html())){
-			return true;
-		}else{
-			return false;
-		}
-	};
-
-	return initializePlayers();
+	return initialize();
 });
