@@ -1,7 +1,7 @@
 $(function(){
 	human = 'x'; // turn 0
 	computer = 'o'; // turn 1
-	arrayorginal=[];
+	arrayoriginal=[];
 
 	function random(num){
 		randomInt = Math.floor(Math.random()*num)+1;
@@ -33,17 +33,22 @@ $(function(){
 		return warning;		
 	};
 
+	computerMoves = [];
+	playerMoves = [];
+	corner = ["1","3","9","7"];
+	edge = ["2","6","8","4"];
+
 	function initialize(){
 		newGame();
 		totalCount = 0;
 		playerCount = 0;
 
 		$('td').on('click',function(){
-			if($(this).html() == "" && !endGame){
+			if($(this).text() == "" && !endGame){
 				playerCount++;
 				$(this).html(human);
 				pm = $(this).attr('id');
-				arrayorginal.push(pm);
+				arrayoriginal.push(pm);
 				compMove();
 			}
 			if(GameOver()){
@@ -53,25 +58,18 @@ $(function(){
 				}else{
 					alert("computer wins");
 				}
-			} else {
-				totalCount++;
+			} else if(totalCount==9){
+				alert("Tie");
 			}
-			if(totalCount==9){
-			}
-			console.log(arrayorginal);
 		});
 	}
 
-	computerMoves = [];
-	playerMoves = [];
-	corner = ["1","3","9","7"];
-	edge = ["2","6","8","4"];
-
+	
 	// AI (Isn't really an AI)
 	function compMove(){
 		if(!endGame){
-			playerMoves = [arrayorginal[0]];
 			if(playerCount == 1){
+				playerMoves.push([arrayoriginal[0]]);
 				if(pm=="5"){ 
 					randomStore = random(4);
 					if(randomStore == 1){
@@ -99,7 +97,7 @@ $(function(){
 						delete corner[i];
 						i = corner.indexOf(pm);
 						delete corner[i];
-					}else if(randomStore = 4){
+					}else if(randomStore == 4){
 						$("#7").html(computer);
 						computerMoves.push("7");
 						i = corner.indexOf(computerMoves[0]);
@@ -124,7 +122,7 @@ $(function(){
 					}
 				}
 			}else if(playerCount == 2){
-				playerMoves = [arrayorginal[0],arrayorginal[1]];
+				playerMoves = [arrayoriginal[0],arrayoriginal[1]];
 				if(
 					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
 					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
@@ -150,8 +148,8 @@ $(function(){
 					((playerMoves[0]=="3" && playerMoves[1]== "9")||(playerMoves[1]=="9" && playerMoves[0]== "3")) ||
 					((playerMoves[0]=="1" && playerMoves[1]== "9")||(playerMoves[1]=="9" && playerMoves[0]== "1")) ||
 					((playerMoves[0]=="7" && playerMoves[1]== "3")||(playerMoves[1]=="7" && playerMoves[0]== "3"))){
-
-						if((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "1")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
+					
+					if((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "1")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
 						i = corner.indexOf(pm);
 						delete corner[i];
 					}else{
@@ -332,218 +330,8 @@ $(function(){
 						$("#"+edge[0]).html(computer);
 					}
 				}
-
-				playerMoves = [arrayorginal[1],arrayorginal[0]];
-				if(
-					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
-					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
-					((playerMoves[0]=="3" && playerMoves[1]== "6")||(playerMoves[1]=="3" && playerMoves[0]== "6")) ||
-					((playerMoves[0]=="7" && playerMoves[1]== "4")||(playerMoves[1]=="7" && playerMoves[0]== "4")) ||
-					((playerMoves[0]=="8" && playerMoves[1]== "5")||(playerMoves[1]=="8" && playerMoves[0]== "5")) ||
-					((playerMoves[0]=="9" && playerMoves[1]== "6")||(playerMoves[1]=="9" && playerMoves[0]== "6")) ||
-					((playerMoves[0]=="1" && playerMoves[1]== "2")||(playerMoves[1]=="1" && playerMoves[0]== "2")) ||
-					((playerMoves[0]=="4" && playerMoves[1]== "5")||(playerMoves[1]=="4" && playerMoves[0]== "5")) ||
-					((playerMoves[0]=="7" && playerMoves[1]== "8")||(playerMoves[1]=="7" && playerMoves[0]== "8")) ||
-					((playerMoves[0]=="3" && playerMoves[1]== "2")||(playerMoves[1]=="3" && playerMoves[0]== "2")) ||
-					((playerMoves[0]=="6" && playerMoves[1]== "5")||(playerMoves[1]=="6" && playerMoves[0]== "5")) ||
-					((playerMoves[0]=="9" && playerMoves[1]== "8")||(playerMoves[1]=="9" && playerMoves[0]== "8")) ||
-					((playerMoves[0]=="1" && playerMoves[1]== "5")||(playerMoves[1]=="1" && playerMoves[0]== "5")) ||
-					((playerMoves[0]=="9" && playerMoves[1]== "5")||(playerMoves[1]=="9" && playerMoves[0]== "5")) ||
-					((playerMoves[0]=="3" && playerMoves[1]== "5")||(playerMoves[1]=="3" && playerMoves[0]== "5")) ||
-					((playerMoves[0]=="7" && playerMoves[1]== "5")||(playerMoves[1]=="7" && playerMoves[0]== "5")) ||
-					((playerMoves[0]=="1" && playerMoves[1]== "3")||(playerMoves[1]=="3" && playerMoves[0]== "1")) ||
-					((playerMoves[0]=="4" && playerMoves[1]== "6")||(playerMoves[1]=="6" && playerMoves[0]== "4")) ||
-					((playerMoves[0]=="7" && playerMoves[1]== "9")||(playerMoves[1]=="9" && playerMoves[0]== "7")) ||
-					((playerMoves[0]=="1" && playerMoves[1]== "7")||(playerMoves[1]=="7" && playerMoves[0]== "1")) ||
-					((playerMoves[0]=="2" && playerMoves[1]== "8")||(playerMoves[1]=="8" && playerMoves[0]== "2")) ||
-					((playerMoves[0]=="3" && playerMoves[1]== "9")||(playerMoves[1]=="9" && playerMoves[0]== "3")) ||
-					((playerMoves[0]=="1" && playerMoves[1]== "9")||(playerMoves[1]=="9" && playerMoves[0]== "1")) ||
-					((playerMoves[0]=="7" && playerMoves[1]== "3")||(playerMoves[1]=="7" && playerMoves[0]== "3"))){
-
-						if((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "1")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						else if((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[0]=="5" && playerMoves[1]== "2")) {$("#8").html(computer);computerMoves.push("#8");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="3" && playerMoves[1]== "6")||(playerMoves[0]=="6" && playerMoves[1]== "3")) {$("#9").html(computer);computerMoves.push("#9");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="7" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "7")) {$("#1").html(computer);computerMoves.push("#1");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="8" && playerMoves[1]== "5")||(playerMoves[0]=="5" && playerMoves[1]== "8")) {$("#2").html(computer);computerMoves.push("#2");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="9" && playerMoves[1]== "6")||(playerMoves[0]=="6" && playerMoves[1]== "9")) {$("#3").html(computer);computerMoves.push("#3");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="1" && playerMoves[1]== "2")||(playerMoves[0]=="2" && playerMoves[1]== "1")) {$("#3").html(computer);computerMoves.push("#3");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="4" && playerMoves[1]== "5")||(playerMoves[0]=="5" && playerMoves[1]== "4")) {$("#6").html(computer);computerMoves.push("#6");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="7" && playerMoves[1]== "8")||(playerMoves[0]=="8" && playerMoves[1]== "7")) {$("#9").html(computer);computerMoves.push("#9");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="3" && playerMoves[1]== "2")||(playerMoves[0]=="2" && playerMoves[1]== "3")) {$("#1").html(computer);computerMoves.push("#1");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="6" && playerMoves[1]== "5")||(playerMoves[0]=="5" && playerMoves[1]== "6")) {$("#4").html(computer);computerMoves.push("#4");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="9" && playerMoves[1]== "8")||(playerMoves[0]=="8" && playerMoves[1]== "9")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="1" && playerMoves[1]== "5")||(playerMoves[0]=="5" && playerMoves[1]== "1")) {$("#9").html(computer);computerMoves.push("#9");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="9" && playerMoves[1]== "5")||(playerMoves[0]=="5" && playerMoves[1]== "9")) {$("#1").html(computer);computerMoves.push("#1");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="3" && playerMoves[1]== "5")||(playerMoves[0]=="5" && playerMoves[1]== "3")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="7" && playerMoves[1]== "5")||(playerMoves[0]=="5" && playerMoves[1]== "7")) {$("#3").html(computer);computerMoves.push("#3");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-					// other case ---> 8 of them
-						if((playerMoves[0]=="1" && playerMoves[1]== "3")||(playerMoves[0]=="3" && playerMoves[1]== "1")) {$("#2").html(computer);computerMoves.push("#2");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="4" && playerMoves[1]== "6")||(playerMoves[0]=="6" && playerMoves[1]== "4")) {$("#5").html(computer);computerMoves.push("#5");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="7" && playerMoves[1]== "9")||(playerMoves[0]=="9" && playerMoves[1]== "7")) {$("#8").html(computer);computerMoves.push("#8");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="1" && playerMoves[1]== "7")||(playerMoves[0]=="7" && playerMoves[1]== "1")) {$("#4").html(computer);computerMoves.push("#4");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="2" && playerMoves[1]== "8")||(playerMoves[0]=="8" && playerMoves[1]== "2")) {$("#5").html(computer);computerMoves.push("#5");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="3" && playerMoves[1]== "9")||(playerMoves[0]=="9" && playerMoves[1]== "3")) {$("#6").html(computer);computerMoves.push("#6");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="1" && playerMoves[1]== "9")||(playerMoves[0]=="9" && playerMoves[1]== "1")) {$("#5").html(computer);computerMoves.push("#5");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-						if((playerMoves[0]=="7" && playerMoves[1]== "3")||(playerMoves[0]=="7" && playerMoves[1]== "3")) {$("#5").html(computer);computerMoves.push("#5");if(corner.indexOf(pm)!==-1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-					}else{
-						i = edge.indexOf(pm);
-						delete edge[i];
-					}}
-				}else{
-					if(corner.indexOf(pm)!== -1){
-						i = corner.indexOf(pm);
-						delete corner[i];
-						$("#"+corner[0]).html(computer);
-					}else{
-						// dont forget to delete the computer moves from the existing array
-						i = edge.indexOf(pm);
-						delete edge[i];
-						$("#"+edge[0]).html(computer);
-					}
-				}
-
 			}else if(playerCount == 3){
-				playerMoves = [arrayorginal[0],arrayorginal[1]];
+				playerMoves = [arrayoriginal[0],arrayoriginal[1]];
 				if(
 					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
 					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
@@ -752,7 +540,7 @@ $(function(){
 					}
 				}
 
-				playerMoves = [arrayorginal[1],arrayorginal[2]];
+				playerMoves = [arrayoriginal[0],arrayoriginal[2]];
 				if(
 					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
 					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
@@ -961,7 +749,7 @@ $(function(){
 					}
 				}
 	
-				playerMoves = [arrayorginal[0],arrayorginal[2]];
+				playerMoves = [arrayoriginal[1],arrayoriginal[2]];
 				if(
 					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
 					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
@@ -1170,7 +958,7 @@ $(function(){
 					}
 				}
 			}else if(playerCount == 4){
-				playerMoves = [arrayorginal[0],arrayorginal[1]];
+				playerMoves = [arrayoriginal[0],arrayoriginal[1]];
 				if(
 					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
 					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
@@ -1195,9 +983,8 @@ $(function(){
 					((playerMoves[0]=="2" && playerMoves[1]== "8")||(playerMoves[1]=="8" && playerMoves[0]== "2")) ||
 					((playerMoves[0]=="3" && playerMoves[1]== "9")||(playerMoves[1]=="9" && playerMoves[0]== "3")) ||
 					((playerMoves[0]=="1" && playerMoves[1]== "9")||(playerMoves[1]=="9" && playerMoves[0]== "1")) ||
-					((playerMoves[0]=="7" && playerMoves[1]== "3")||(playerMoves[1]=="7" && playerMoves[0]== "3"))){
-
-						if((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "1")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
+					((playerMoves[0]=="7" && playerMoves[1]== "3")||(playerMoves[1]=="7" && playerMoves[0]== "3")) ) {
+					if((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "1")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
 						i = corner.indexOf(pm);
 						delete corner[i];
 					}else{
@@ -1379,7 +1166,7 @@ $(function(){
 					}
 				}
 
-				playerMoves = [arrayorginal[0],arrayorginal[2]];
+				playerMoves = [arrayoriginal[0],arrayoriginal[2]];
 				if(
 					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
 					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
@@ -1588,7 +1375,7 @@ $(function(){
 					}
 				}
 	
-				playerMoves = [arrayorginal[0],arrayorginal[3]];
+				playerMoves = [arrayoriginal[0],arrayoriginal[3]];
 				if(
 					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
 					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
@@ -1796,7 +1583,7 @@ $(function(){
 						$("#"+edge[0]).html(computer);
 					}
 				}
-				playerMoves = [arrayorginal[1],arrayorginal[2]];
+				playerMoves = [arrayoriginal[1],arrayoriginal[2]];
 				if(
 					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
 					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
@@ -2004,7 +1791,7 @@ $(function(){
 						$("#"+edge[0]).html(computer);
 					}
 				}
-				playerMoves = [arrayorginal[1],arrayorginal[3]];
+				playerMoves = [arrayoriginal[1],arrayoriginal[3]];
 				if(
 					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
 					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
@@ -2029,9 +1816,8 @@ $(function(){
 					((playerMoves[0]=="2" && playerMoves[1]== "8")||(playerMoves[1]=="8" && playerMoves[0]== "2")) ||
 					((playerMoves[0]=="3" && playerMoves[1]== "9")||(playerMoves[1]=="9" && playerMoves[0]== "3")) ||
 					((playerMoves[0]=="1" && playerMoves[1]== "9")||(playerMoves[1]=="9" && playerMoves[0]== "1")) ||
-					((playerMoves[0]=="7" && playerMoves[1]== "3")||(playerMoves[1]=="7" && playerMoves[0]== "3"))){
-
-						if((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "1")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
+					((playerMoves[0]=="7" && playerMoves[1]== "3")||(playerMoves[1]=="7" && playerMoves[0]== "3"))) {
+					if((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "1")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
 						i = corner.indexOf(pm);
 						delete corner[i];
 					}else{
@@ -2213,7 +1999,7 @@ $(function(){
 					}
 				}
 
-				playerMoves = [arrayorginal[2],arrayorginal[0]];
+				playerMoves = [arrayoriginal[2],arrayoriginal[0]];
 				if(
 					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
 					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
@@ -2240,7 +2026,7 @@ $(function(){
 					((playerMoves[0]=="1" && playerMoves[1]== "9")||(playerMoves[1]=="9" && playerMoves[0]== "1")) ||
 					((playerMoves[0]=="7" && playerMoves[1]== "3")||(playerMoves[1]=="7" && playerMoves[0]== "3"))){
 
-						if((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "1")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
+					if((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "1")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
 						i = corner.indexOf(pm);
 						delete corner[i];
 					}else{
@@ -2422,7 +2208,7 @@ $(function(){
 					}
 				}
 
-				playerMoves = [arrayorginal[2],arrayorginal[3]];
+				playerMoves = [arrayoriginal[2],arrayoriginal[3]];
 				if(
 					((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[1]=="1" && playerMoves[0]== "4")) ||
 					((playerMoves[0]=="2" && playerMoves[1]== "5")||(playerMoves[1]=="2" && playerMoves[0]== "5")) ||
@@ -2449,7 +2235,7 @@ $(function(){
 					((playerMoves[0]=="1" && playerMoves[1]== "9")||(playerMoves[1]=="9" && playerMoves[0]== "1")) ||
 					((playerMoves[0]=="7" && playerMoves[1]== "3")||(playerMoves[1]=="7" && playerMoves[0]== "3"))){
 
-						if((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "1")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
+					if((playerMoves[0]=="1" && playerMoves[1]== "4")||(playerMoves[0]=="4" && playerMoves[1]== "1")) {$("#7").html(computer);computerMoves.push("#7");if(corner.indexOf(pm)!==-1){
 						i = corner.indexOf(pm);
 						delete corner[i];
 					}else{
@@ -2631,7 +2417,8 @@ $(function(){
 					}
 				}
 			} 
-
+		}else{
+			alert("TIE");
 		}	
 	}
 	return initialize();
