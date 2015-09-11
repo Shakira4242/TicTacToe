@@ -1,23 +1,24 @@
 $(function(){
+	human = 'x'; // turn 0
+	computer = 'o'; // turn 1
 
-	function switchPlayers(){
-		curPlayer = curPlayer ? 0 : 1;
-		switchPiece();
+	function random(num){
+		randomInt = Math.floor(Math.random()*num)+1;
+		return randomInt;
+	}
+	
+	function getToggle(){
+		toggle = 1;
 	};
 
-	function getPlayer(){
-		curPlayer = Math.floor(Math.random()*2);
-		switchPiece();
-	}
-
-	function switchPiece(){
-		curPiece = curPlayer ? 'x' : 'o';
-	}
+	function toggling(){
+		toggle = toggle ? 0 : 1;
+	};
 
 	function newGame(){
 		endGame = false;
 		clearBoard();
-		getPlayer();
+		getToggle();
 	}
 
 	function clearBoard(){
@@ -25,7 +26,6 @@ $(function(){
 			$(v).html("");
 		});
 	}
-
 
 	function GameOver(){
 		warning = false;
@@ -37,36 +37,56 @@ $(function(){
 
 	function initialize(){
 		newGame();
-		count = 0;
+		totalCount = 0;
+		playerCount = 0;
 
 		$('td').on('click',function(){
-			if($(this).html() == "" && !endGame){
-				$(this).html(curPiece);
+			if($(this).html() == "" && !endGame && toggle==1){
+				playerCount++;
+				$(this).html(human);
+				mv = $(this).attr('id');
+				compMove();
 			}
 			if(GameOver()){
 				endGame = true;
-				winner = curPlayer; 
-				popup(1);
 			} else {
-				count ++;
-				switchPlayers();
+				totalCount++;
+				toggling();
 			}
-			if(count==9){
-				popup(2);
+			if(totalCount==9){
 			}
-
 		});
-
 	}
 
-	function popup(num){
-		if(num == 1){
-			alert('Player ' + curPiece + ' wins!');
+	function compMove(){
+		if(playerCount == 1){
+			if((mv == "5")){
+				randomStore = random(4);
+				if(randomStore == 1){
+					$("#1").html(computer);
+				}else if(randomStore == 2){
+					$("#3").html(computer);
+				}else if(randomStore == 3){
+					$("#9").html(computer);
+				}else if(randomStore = 4){
+					$("#7").html(computer);
+				}
+			}else{
+				if(mv == "2" || mv == "")
+			}
 		}
-		if(num == 2){
-			alert("Its a tie");
-		}
+		
 	}
+
+	//Declaring the winner
+	// function popup(num){
+	// 	if(num == 1){
+	// 		alert('Player ' + curPiece + ' wins!');
+	// 	}
+	// 	if(num == 2){
+	// 		alert("Its a tie");
+	// 	}
+	// }
 
 	return initialize();
 });
