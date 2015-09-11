@@ -54,8 +54,8 @@ $(function(){
 			if(count==9){
 				popup(2);
 			}
-
 		});
+		
 
 	}
 
